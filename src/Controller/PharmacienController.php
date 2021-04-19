@@ -25,4 +25,19 @@ class PharmacienController extends AbstractController
             'controller_name' => 'PharmacienController',
         ]);
     }
+     /**
+     * @Route("/api/profil", name="pharmacien", methods={"GET"})
+     */
+    public function findOnePharmacien(PharmacienRepository $PharmacienRepository,NormalizerInterface $normalizer  )
+    {
+        $pharmacien = $PharmacienRepository->findAll();
+        $pharmacienNormalises = $normalizer->normalize($pharmacien);
+        $json=json_encode($pharmacienNormalises);
+        dd($json);
+
+        
+        return $this->render('pharmacien/index.html.twig', [
+            'controller_name' => 'PharmacienController',
+        ]);
+    }
 }
