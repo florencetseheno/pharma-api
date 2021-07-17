@@ -29,6 +29,11 @@ class Pharmacien
      */
     private $prenom_pharmacien;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Password;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,6 +59,18 @@ class Pharmacien
     public function setPrenomPharmacien(string $prenom_pharmacien): self
     {
         $this->prenom_pharmacien = $prenom_pharmacien;
+
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->Password;
+    }
+
+    public function setPassword(?string $Password): self
+    {
+        $this->Password = $Password;
 
         return $this;
     }

@@ -26,7 +26,7 @@ class MedicamentController extends AbstractController
     }
 
  /**
-     * @Route("/api/medicament", name="store_medicament", methods={"POST"})
+     * @Route("/api/medicament/create", name="store_medicament", methods={"POST"})
      */
     public function storeMedicament(Request $request, SerializerInterface $serializer, EntityManagerInterface $em)
     {
@@ -42,4 +42,14 @@ class MedicamentController extends AbstractController
      }
     }
 
+
+
+ /**
+     * @Route("/api/medicament/{id}", name="medicament_details" )
+     */
+    public function show(int $id, MedicamentRepository $MedicamentRepository): Response
+    {
+        return $this->json($MedicamentRepository->find($id),200, [ "Content-Type"=>"Application/json"]);
+
+    }
 }

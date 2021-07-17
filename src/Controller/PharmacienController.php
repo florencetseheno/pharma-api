@@ -9,35 +9,48 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 class PharmacienController extends AbstractController
 {
-    /**
+  
+     /**
      * @Route("/api/pharmacien", name="pharmacien", methods={"GET"})
      */
-    public function index(PharmacienRepository $PharmacienRepository,NormalizerInterface $normalizer  )
+    public function Index(PharmacienRepository $PharmacienRepository,NormalizerInterface $normalizer  )
     {
-        $pharmacien = $PharmacienRepository->findAll();
-        $pharmacienNormalises = $normalizer->normalize($pharmacien);
-        // dd( $pharmacienNormalises );
-        $json=json_encode($pharmacienNormalises);
-        dd($json);
-
-        
-        return $this->render('pharmacien/index.html.twig', [
-            'controller_name' => 'PharmacienController',
-        ]);
+        return $this->json($PharmacienRepository->findAll(),200, [ "Content-Type"=>"Application/json"]);
     }
-     /**
-     * @Route("/api/profil", name="pharmacien", methods={"GET"})
+
+      /**
+     * @Route("/api/pharmacien/{id}", name="profile", methods={"GET"})
      */
-    public function findOnePharmacien(PharmacienRepository $PharmacienRepository,NormalizerInterface $normalizer  )
+    public function findOnePharmacien(PharmacienRepository $PharmacienRepository,NormalizerInterface $normalizer, int $id  )
     {
-        $pharmacien = $PharmacienRepository->findAll();
-        $pharmacienNormalises = $normalizer->normalize($pharmacien);
-        $json=json_encode($pharmacienNormalises);
-        dd($json);
+        return $this->json($PharmacienRepository->find($id),200, [ "Content-Type"=>"Application/json"]);
+    }
+
+
+         /**
+     * @Route("/api/pharmacien/{nom_pharmacien}/{Password}", name="login", methods={"GET"})
+     */
+    public function login(PharmacienRepository $PharmacienRepository,NormalizerInterface $normalizer, string $Password, string $nom_pharmacien)
+    {
+        $dummy = $PharmacienRepository->findOneBy(array(
+            'nom_pharmacien'=>$nom_pharmacien,
+            'Password'=>$Password,
+        ));
+        if (!$dummy){
+            $data = array(  'status' => 400, 
+                            'message' => 'User not found',
+                            'reponse' => $dummy);
+            return $this->json($data);
+        }else{
+            $data = array('status' => 200, 
+                            'message' => 'User verified',
+                            'reponse' => $dummy
+                        );
+            return $this->json($data);
+        }
+        
 
         
-        return $this->render('pharmacien/index.html.twig', [
-            'controller_name' => 'PharmacienController',
-        ]);
+        // return $this->json($PharmacienRepository->find($id),200, [ "Content-Type"=>"Application/json"]);
     }
 }
