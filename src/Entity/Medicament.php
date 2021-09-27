@@ -55,6 +55,21 @@ class Medicament
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $Quantite;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Dosage;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $PrixUn;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,6 +143,42 @@ class Medicament
     public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->Quantite;
+    }
+
+    public function setQuantite(?int $Quantite): self
+    {
+        $this->Quantite = $Quantite;
+
+        return $this;
+    }
+
+    public function getDosage(): ?string
+    {
+        return $this->Dosage;
+    }
+
+    public function setDosage(?string $Dosage): self
+    {
+        $this->Dosage = $Dosage;
+
+        return $this;
+    }
+
+    public function getPrixUn(): ?int
+    {
+        return $this->PrixUn;
+    }
+
+    public function setPrixUn(?int $PrixUn): self
+    {
+        $this->PrixUn = $PrixUn;
 
         return $this;
     }
